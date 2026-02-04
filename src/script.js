@@ -118,20 +118,31 @@ for (const [symbol, count] of Object.entries(SYMBOLS_COUNT)) {
             i is the name of a new variable we're giving in order to create a formula
             i = zero , i is smaller than count which is the value from the object and i++ means it will keep adding on */
  }
-}
 
-const reels = () => {
-    const reels = [[], [], []]; //Creates a 2D array. This array represents three columns.
 
-    for (let i =0 ; i <COLS; i++) { // This loop iterates through the required number of columns.
+
+
+    const reels = []; { //Creates a 2D array. This array represents three columns.
+
+    for (let i =0 ; i <COLS; i++) { 
         
-        const reelSymbols = [...symbols]; // The spread operator (...) creates a shallow copy of the symbols array.
+        // This loop iterates through the required number of columns.
+
+        const reelSymbols = [...symbols]; 
+
+        reels.push([])
+        
+        // The spread operator (...) creates a shallow copy of the symbols array.
          /* this is used to create a copy of the symbols array so that we can manipulate it without changing the original array */ 
 
-        for (let j =0 ; j < ROWS; j++) { //  An inner loop runs for the number of rows.
+        for (let j =0 ; j < ROWS; j++) { 
+            
+            //  An inner loop runs for the number of rows.
         //  This loop would randomly select a symbol from reelSymbols and add it to the current reel. 
         
-        const randomIndex = Math.floor(Math.random() * reelSymbols.length); // math.floor rounds down the number to the nearest whole number
+        const randomIndex = Math.floor(Math.random() * reelSymbols.length); 
+        
+        // math.floor rounds down the number to the nearest whole number
         // math.random generates a random number between 0 and 1
         // multiplying it by reelSymbols.length scales it to the length of the reelSymbols array
         // length gives the total number of elements in the array
@@ -140,15 +151,39 @@ const reels = () => {
         reels[i].push (selectedSymbol); // push is used to add the selected symbol to the current reel
         reelSymbols.splice (randomIndex, 1); // splice is used to remove the selected symbol from the reelSymbols array to avoid duplicates
 
+        
+    }
 
         }
-    }  
-}
+        return reels; /* this returns the reels array which contains the randomly selected symbols for each column of the slot machine */
+    };
+    
+};
 
+const transpose = (reels) => { // this function is used to transpose the reels array
+    const transposedReels = [];     // this variable is used to store the transposed reels
+    for (let i = 0; i < ROWS; i++) { // this loop iterates through each row
+        transposedReels.push([]); // this adds a new empty array to the transposedReels array
+        for (let j = 0; j < COLS; j++) { // this loop iterates through each column
+            transposedReels[i].push(reels[j][i]);   // this adds the symbol from the reels array to the transposedReels array
+        }
+    }   
+    return transposedReels;
+};
 
- spinSlot(); /* this is used to call the function so that it runs and shows the symbols and their count in the console log */
-
-
+const printRows = (transposedReels) => { // this function is used to print the rows of the slot machine
+    for (const row of transposedReels) { // this loop iterates through each row in the rows array
+        let rowString = ""; // this variable is used to store the string representation of the row
+        for (const [i, symbol] of row.entries()) { // this loop iterates through each symbol in the row
+            rowString += symbol; // this adds the symbol to the rowString variable
+            if (i != row.length - 1) { // this checks if the current symbol is not the last symbol in the row
+                rowString += " | "; // this adds a separator between the symbols
+            }
+        }
+        console.log(rowString);
+    }
+};
+ 
 let balance = Deposit();
 console.log ( "You have deposited: R " + balance); // This will show the amount that was deposited by the user// 
 // if you dont call the function it wont run // 
@@ -159,5 +194,12 @@ console.log ( "You have bet on " + lines + " lines");
 const bet = getBet(balance, lines);
 console.log ( "You have bet: R " + bet);
 
+const reels = spinSlot(); 
+console.log(reels); /* this will show the randomly generated reels in the console log so we can see the output of the spinSlot function */
+ 
+const transposedReels = transpose(reels);
+console.log(transposedReels); /* this will show the transposed reels in the console log so we can see the output of the transpose function */
+console.log (reels);
 
-
+printRows(transposedReels); /* this will print the rows of the transposed reels in a formatted way so we can see the output of the printrows function */
+    
