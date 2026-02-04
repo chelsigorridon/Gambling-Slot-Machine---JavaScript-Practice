@@ -23,6 +23,25 @@ console.log(amount);*/
 
 const prompt = require("prompt-sync")(); // this is used to allow the user to input data into the console and shows in the node terminal 
 
+const ROWS = 3; //Used define the number of rows and columns in the slot machine
+const COLS = 3; // Snake case is used here to define constants
+
+const SYMBOLS_COUNT = {  // This is used to define the number of symbols that will appear in the slot machine
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+};
+
+const SYMBOLS_VALUES = {  // This is used to define the value of each symbol in the slot machine
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+};
+
+
+
 /* This is a shorthand way of writing the same function as above using an arrow function */
 const Deposit =() => {
 
@@ -49,9 +68,71 @@ const Deposit =() => {
 }
 };
 
-const Despositamount = Deposit();
-console.log ( "You have deposited: R " + Despositamount); // This will show the amount that was deposited by the user// 
+const NumberOfLines = () =>  {
+
+    while (true) {  
+
+    const lines = prompt  ("Enter Amount Of Lines To Bet On (1-3) : ");
+    const AmountOfLines = parseFloat (lines); 
+   
+  
+    if (isNaN (AmountOfLines) || AmountOfLines < 0 || AmountOfLines > 3) {
+    
+        console.log ("Invalid amount of Lines, try again. ");
+
+     } else { 
+        return AmountOfLines;    
+    }
+}
+};
+
+const getBet = (balance, lines) =>  {  /* The Balance has been passed as a parameter to the function so that we can
+     use it inside the function it has also been changed to let so the amount is allowed to change */
+
+    while (true) {  
+
+    const bet = prompt  ("Enter Total Bet Per Line : ");
+    const numberBet = parseFloat (bet); 
+   
+  
+    if (isNaN (numberBet) || numberBet < 0 || numberBet < balance / lines) { /* here we are checking if the bet is a number and if its less than 0 
+    we are also checking if the bet is more than the balance divided by the number of lines the user is betting on */
+    
+        console.log ("Invalid bet, try again. ");
+
+     } else { 
+        return numberBet;    
+    }
+}
+};
+
+const spinSlot = () => {  
+const symbols = [];
+for (const [symbol, count] of Object.entries(SYMBOLS_COUNT)) {
+    for (let i = 0; i < count; i++) {
+        symbols.push(symbol);
+        console.log (symbols);
+    }
+         /* This code creates an array of symbols based on the SYMBOLS_COUNT object.
+            It iterates over each symbol and its count, adding the symbol to the symbols array the specified number of times.
+            i is the name of a new variable we're giving in order to create a formula
+            i = zero , i is smaller than count which is the value from the object and i++ means it will keep adding on */
+ }
+}
+
+
+ spinSlot(); /* this is used to call the function so that it runs and shows the symbols and their count in the console log */
+
+
+let balance = Deposit();
+console.log ( "You have deposited: R " + balance); // This will show the amount that was deposited by the user// 
 // if you dont call the function it wont run // 
+
+const lines = NumberOfLines();
+console.log ( "You have bet on " + lines + " lines");
+
+const bet = getBet(balance, lines);
+console.log ( "You have bet: R " + bet);
 
 
 
