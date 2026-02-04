@@ -120,6 +120,27 @@ for (const [symbol, count] of Object.entries(SYMBOLS_COUNT)) {
  }
 }
 
+const reels = () => {
+    const reels = [[], [], []]; //Creates a 2D array. This array represents three columns.
+
+    for (let i =0 ; i <COLS; i++) { // This loop iterates through the required number of columns.
+        const reelSymbols = [...symbols]; // The spread operator (...) creates a shallow copy of the symbols array.
+         /* this is used to create a copy of the symbols array so that we can manipulate it without changing the original array */ 
+        for (let j =0 ; j < ROWS; j++) { //  An inner loop runs for the number of rows.
+        //  This loop would randomly select a symbol from reelSymbols and add it to the current reel. 
+        
+        const randomIndex = Math.floor(Math.random() * reelSymbols.length); // math.floor rounds down the number to the nearest whole number
+        // math.random generates a random number between 0 and 1
+        // multiplying it by reelSymbols.length scales it to the length of the reelSymbols array
+        // length gives the total number of elements in the array
+        const selectedSymbol = reelSymbols[randomIndex];
+
+
+        }
+    }  
+}
+
+
 
  spinSlot(); /* this is used to call the function so that it runs and shows the symbols and their count in the console log */
 
