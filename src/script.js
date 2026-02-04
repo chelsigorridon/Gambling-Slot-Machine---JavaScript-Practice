@@ -29,6 +29,14 @@ const Deposit =() => {
     const NumberDepositamount = parseFloat (Despositamount); 
     /* Parse converts the string input from the user into a number. parseFloat 
     ensures it can be used in calculations later on and it ensure decimals are added */
+
+    if (isNaN (NumberDepositamount) || NumberDepositamount < 0) {
+        console.log("Invalid deposit amount, try again. ");
+    }
+
+    /* If statements are used to do checks on the user input to ensure it is valid
+    isNaN checks if the input is not a number || this means OR if what the user input it is < less than 0
+    if we console log it the user will get a message saying invalid */
   
 };
 
